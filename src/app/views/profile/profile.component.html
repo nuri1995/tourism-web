@@ -1,0 +1,267 @@
+<div>
+  <h1>PROFILE</h1>
+  <form
+    *ngIf="user.isCompany()"
+    [formGroup]="profileCompanyForm"
+    (ngSubmit)="onSave()"
+  >
+    <div class="form-group">
+      <label>Name: </label>
+      <input type="text" [formControl]="name" />
+      <div>
+        <span
+          style="color: red"
+          *ngIf="
+            profileCompanyForm.get('name').errors &&
+            (profileCompanyForm.get('name').touched ||
+              profileCompanyForm.get('name').dirty)
+          "
+        >
+          <span *ngIf="profileCompanyForm.get('name').errors.required"
+            >Name is required
+          </span>
+
+          <span *ngIf="profileCompanyForm.get('name').errors.minlength"
+            >Name must be grater than 3 characters
+          </span>
+          <span *ngIf="profileCompanyForm.get('name').errors.maxlength"
+            >Name must be lower than 55 characters
+          </span>
+          <div *ngIf="profileCompanyForm.get('name').errors.spaces">
+            It must not contain spaces at the beginning or end of the name.
+          </div>
+        </span>
+      </div>
+
+      <label>Surname: </label>
+      <input type="text" [formControl]="surname" />
+      <div>
+        <span
+          style="color: red"
+          *ngIf="
+            profileCompanyForm.get('surname').errors &&
+            (profileCompanyForm.get('surname').touched ||
+              profileCompanyForm.get('surname').dirty)
+          "
+        >
+          <span *ngIf="profileCompanyForm.get('surname').errors.minlength"
+            >Surname must be grater than 3 characters
+          </span>
+          <span *ngIf="profileCompanyForm.get('surname').errors.maxlength"
+            >Surname must be lower than 55 characters
+          </span>
+        </span>
+      </div>
+      <label>Birth date: </label>
+      <input type="date" [formControl]="birthdate" />
+      <div>
+        <span
+          style="color: red"
+          *ngIf="
+            profileCompanyForm.get('birthdate').errors &&
+            (profileCompanyForm.get('birthdate').touched ||
+              profileCompanyForm.get('birthdate').dirty)
+          "
+        >
+          The birth date is not valid
+        </span>
+      </div>
+      <label>Phone: </label>
+      <input type="number" [formControl]="phone" />
+      <div>
+        <span
+          style="color: red"
+          *ngIf="
+            profileCompanyForm.get('phone').errors &&
+            (profileCompanyForm.get('phone').touched ||
+              profileCompanyForm.get('phone').dirty)
+          "
+        >
+          The phone is not valid
+        </span>
+      </div>
+
+      <label>Nationality: </label>
+      <select class="custom-select" [formControl]="nationality">
+        <option value="" disabled>- Select -</option>
+        <option>ES</option>
+        <option>FR</option>
+        <option>IT</option>
+        <option>PT</option>
+      </select>
+
+      <label>NIF: </label>
+      <input type="string" [formControl]="nif" />
+      <div>
+        <span
+          style="color: red"
+          *ngIf="
+            profileCompanyForm.get('nif').errors &&
+            (profileCompanyForm.get('nif').touched ||
+              profileCompanyForm.get('nif').dirty)
+          "
+        >
+          <span *ngIf="profileCompanyForm.get('nif').errors.checkNif"
+            >The NIF is not valid
+          </span>
+        </span>
+      </div>
+      <label>Company name: </label>
+      <input type="text" [formControl]="companyName" />
+      <div>
+        <span
+          style="color: red"
+          *ngIf="
+            profileCompanyForm.get('companyName').errors &&
+            (profileCompanyForm.get('companyName').touched ||
+              profileCompanyForm.get('companyName').dirty)
+          "
+        >
+          <span *ngIf="profileCompanyForm.get('companyName').errors.minlength"
+            >Name must be grater than 3 characters
+          </span>
+          <span *ngIf="profileCompanyForm.get('companyName').errors.maxlength"
+            >Name must be lower than 55 characters
+          </span>
+          <div *ngIf="profileCompanyForm.get('companyName').errors.spaces">
+            It must not contain spaces at the beginning or end of the name.
+          </div>
+        </span>
+      </div>
+      <label>Company description: </label>
+      <input type="text" [formControl]="companyDescription" />
+
+      <label>CIF: </label>
+      <input type="string" [formControl]="cif" />
+      <div>
+        <span
+          style="color: red"
+          *ngIf="
+            profileCompanyForm.get('cif').errors &&
+            (profileCompanyForm.get('cif').touched ||
+              profileCompanyForm.get('cif').dirty)
+          "
+          >The CIF is not valid
+        </span>
+      </div>
+
+      <label>About me: </label>
+      <input type="text" [formControl]="about" />
+
+      <button type="submit" [disabled]="!profileCompanyForm.valid">Save</button>
+    </div>
+  </form>
+  <form
+    *ngIf="user.isTourist()"
+    [formGroup]="profileTouristForm"
+    (ngSubmit)="onSave()"
+  >
+    <div class="form-group">
+      <label>Name: </label>
+      <input type="text" [formControl]="name" />
+      <div>
+        <span
+          style="color: red"
+          *ngIf="
+            profileTouristForm.get('name').errors &&
+            (profileTouristForm.get('name').touched ||
+              profileTouristForm.get('name').dirty)
+          "
+        >
+          <span *ngIf="profileTouristForm.get('name').errors.required"
+            >Name is required
+          </span>
+
+          <span *ngIf="profileTouristForm.get('name').errors.minlength"
+            >Name must be grater than 3 characters
+          </span>
+          <span *ngIf="profileTouristForm.get('name').errors.maxlength"
+            >Name must be lower than 55 characters
+          </span>
+          <div *ngIf="profileTouristForm.get('name').errors.spaces">
+            It must not contain spaces at the beginning or end of the name.
+          </div>
+        </span>
+      </div>
+
+      <label>Surname: </label>
+      <input type="text" [formControl]="surname" />
+      <div>
+        <span
+          style="color: red"
+          *ngIf="
+            profileTouristForm.get('surname').errors &&
+            (profileTouristForm.get('surname').touched ||
+              profileTouristForm.get('surname').dirty)
+          "
+        >
+          <span *ngIf="profileTouristForm.get('surname').errors.minlength"
+            >Surname must be grater than 3 characters
+          </span>
+          <span *ngIf="profileTouristForm.get('surname').errors.maxlength"
+            >Surname must be lower than 55 characters
+          </span>
+        </span>
+      </div>
+      <label>Birth date: </label>
+      <input type="date" [formControl]="birthdate" />
+      <div>
+        <span
+          style="color: red"
+          *ngIf="
+            profileTouristForm.get('birthdate').errors &&
+            (profileTouristForm.get('birthdate').touched ||
+              profileTouristForm.get('birthdate').dirty)
+          "
+        >
+          The birth date is not valid
+        </span>
+      </div>
+      <label>Phone: </label>
+      <input type="number" [formControl]="phone" />
+      <div>
+        <span
+          style="color: red"
+          *ngIf="
+            profileTouristForm.get('phone').errors &&
+            (profileTouristForm.get('phone').touched ||
+              profileTouristForm.get('phone').dirty)
+          "
+        >
+          The phone is not valid
+        </span>
+      </div>
+
+      <label>Nationality: </label>
+      <select class="custom-select" [formControl]="nationality">
+        <option value="" disabled>- Select -</option>
+        <option>ES</option>
+        <option>FR</option>
+        <option>IT</option>
+        <option>PT</option>
+      </select>
+
+      <label>NIF: </label>
+      <input type="string" [formControl]="nif" />
+      <div>
+        <span
+          style="color: red"
+          *ngIf="
+            profileTouristForm.get('nif').errors &&
+            (profileTouristForm.get('nif').touched ||
+              profileTouristForm.get('nif').dirty)
+          "
+        >
+          <span *ngIf="profileTouristForm.get('nif').errors.checkNif"
+            >The NIF is not valid
+          </span>
+        </span>
+      </div>
+
+      <label>About me: </label>
+      <input type="text" [formControl]="about" />
+
+      <button type="submit" [disabled]="!profileTouristForm.valid">Save</button>
+    </div>
+  </form>
+</div>

@@ -1,0 +1,45 @@
+<div>
+  <h1>LOGIN</h1>
+  <form [formGroup]="loginForm" (ngSubmit)="login()">
+    <div class="form-group">
+      <label>Email: </label>
+      <input type="email" [formControl]="email" />
+      <div>
+        <span
+          style="color: red"
+          *ngIf="
+            loginForm.get('email').errors &&
+            (loginForm.get('email').touched || loginForm.get('email').dirty)
+          "
+        >
+          <span *ngIf="loginForm.get('email').errors.required"
+            >User name is required
+          </span>
+          <span *ngIf="loginForm.get('email').errors.pattern"
+            >The email is not valid
+          </span>
+        </span>
+      </div>
+      <label>Password: </label>
+      <input type="password" [formControl]="password" />
+      <div>
+        <span
+          style="color: red"
+          *ngIf="
+            loginForm.get('password').errors &&
+            (loginForm.get('password').touched ||
+              loginForm.get('password').dirty)
+          "
+        >
+          <span *ngIf="loginForm.get('password').errors.required"
+            >User password is required
+          </span>
+        </span>
+      </div>
+      <div style="color: red">
+        {{ message }}
+      </div>
+      <button type="submit" [disabled]="!loginForm.valid">Login</button>
+    </div>
+  </form>
+</div>

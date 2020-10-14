@@ -1,0 +1,116 @@
+section {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  justify-content: space-around;
+  text-align: left;
+  flex-wrap: wrap;
+  font-weight: bold;
+  padding-top: 20px;
+  padding: 0;
+  font-family: "Montserrat", sans-serif;
+  width: 90%;
+  margin: 0 auto;
+}
+
+h1 {
+  border-bottom: 2px solid var(--foscuro-color);
+  width: 80%;
+}
+
+#activitiesTable {
+  text-align: center;
+  padding: 2%;
+  padding-top: 0;
+}
+#activitiesTable th {
+  font-size: 0.8rem;
+  color: var(--foscuro-color);
+  border: 2px solid var(--foscuro-color);
+  border-radius: 2px;
+  font-weight: bolder;
+}
+
+#activitiesTable td {
+  font-size: 0.7rem;
+  border: 2px solid var(--foscuro-color);
+  border-radius: 2px;
+}
+
+.activity-detail {
+  display: grid;
+  grid-template-columns: 1fr 1fr 0.3fr;
+  grid-template-rows: 1fr 1fr;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  font-weight: bold;
+  padding-top: 20px;
+  padding: 0;
+  font-family: "Montserrat", sans-serif;
+  width: 100%;
+  margin: 0 auto;
+  font-size: 0.8rem;
+  grid-row-gap: 20px;
+}
+
+label {
+  display: inline-block;
+
+  clear: left;
+  width: 40%;
+  text-align: left;
+  padding-top: 15px;
+}
+p {
+  display: inline-block;
+
+  margin: 0;
+  border: 1px solid black;
+  width: 40%;
+  margin-top: 15px;
+  text-align: center;
+}
+.centerButton {
+  width: 100%;
+  text-align: center;
+  align-content: center;
+}
+button {
+  color: white;
+  padding: 10px 10px;
+  margin: 30px 0;
+  border: none;
+  width: 40%;
+  font-weight: bold;
+  background-color: var(--foscuro-color);
+  text-align: center;
+}
+.fav {
+  color: none;
+  padding: 0;
+  margin: 0;
+  border: 0;
+  width: 100%;
+  font-weight: normal;
+  background-color: transparent;
+  text-align: center;
+}
+
+button:disabled {
+  opacity: 0.4;
+}
+
+button:valid {
+  opacity: none;
+  cursor: pointer;
+}
+
+button:valid:hover {
+  opacity: 0.7;
+}
+figure {
+  margin: 0px;
+  text-align: center;
+}
+figcaption {
+  font-size: 0.6rem;
+}

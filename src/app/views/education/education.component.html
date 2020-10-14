@@ -1,0 +1,106 @@
+<div>
+  <h1>EDUCATION</h1>
+  <form [formGroup]="educationForm" (ngSubmit)="onSave()">
+    <div class="form-group">
+      <label>Type: </label>
+      <select
+        class="custom-select"
+        [formControl]="type"
+        (change)="changeType($event)"
+      >
+        <option value="" disabled>- Select -</option>
+        <option>Universidad</option>
+        <option>Ciclo Formativo</option>
+      </select>
+      <div>
+        <span
+          style="color: red"
+          *ngIf="
+            educationForm.get('type').errors &&
+            (educationForm.get('type').touched ||
+              educationForm.get('type').dirty)
+          "
+        >
+          <span *ngIf="educationForm.get('type').errors.required"
+            >Type is required
+          </span>
+        </span>
+      </div>
+      <label>Level: </label>
+      <select class="custom-select" [formControl]="level">
+        <option value="" disabled>- Select -</option>
+        <option *ngFor="let level of levelDrop" [ngValue]="level">
+          {{ level }}
+        </option>
+      </select>
+      <div>
+        <span
+          style="color: red"
+          *ngIf="
+            educationForm.get('level').errors &&
+            (educationForm.get('level').touched ||
+              educationForm.get('level').dirty)
+          "
+        >
+          <span *ngIf="educationForm.get('level').errors.required"
+            >Level is required
+          </span>
+        </span>
+      </div>
+      <label>Name: </label>
+      <input type="text" [formControl]="name" />
+      <div>
+        <span
+          style="color: red"
+          *ngIf="
+            educationForm.get('name').errors &&
+            (educationForm.get('name').touched ||
+              educationForm.get('name').dirty)
+          "
+        >
+          <span *ngIf="educationForm.get('name').errors.required"
+            >Name is required
+          </span>
+
+          <span *ngIf="educationForm.get('name').errors.minlength"
+            >Name must be grater than 3 characters
+          </span>
+          <span *ngIf="educationForm.get('name').errors.maxlength"
+            >Name must be lower than 55 characters
+          </span>
+          <div *ngIf="educationForm.get('name').errors.spaces">
+            It must not contain spaces at the beginning or end of the name.
+          </div>
+        </span>
+      </div>
+
+      <label>University: </label>
+      <input type="text" [formControl]="university" />
+      <div>
+        <span
+          style="color: red"
+          *ngIf="
+            educationForm.get('university').errors &&
+            (educationForm.get('university').touched ||
+              educationForm.get('university').dirty)
+          "
+        >
+          <span *ngIf="educationForm.get('university').errors.required"
+            >University is required
+          </span>
+
+          <span *ngIf="educationForm.get('university').errors.minlength"
+            >University must be grater than 3 characters
+          </span>
+          <span *ngIf="educationForm.get('university').errors.maxlength"
+            >University must be lower than 55 characters
+          </span>
+        </span>
+      </div>
+      <label>Finish date: </label>
+      <input type="date" [formControl]="endDate" />
+
+      <button type="submit" [disabled]="!educationForm.valid">Save</button>
+    </div>
+  </form>
+</div>

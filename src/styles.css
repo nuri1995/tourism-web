@@ -1,1 +1,19 @@
 /* You can add global styles to this file, and also import other style files */
+:root {
+  --principal-color: #1b0b1a;
+  --foscuro-color: #742b77;
+  --fclaro-color: #d8b1d4;
+  --texto-color: #1f1f11;
+  --textoclaro-color: pink;
+  --contraste-color: white;
+  --boder-color: rgba(0, 0, 0, 0.13);
+  font-size: 16px;
+  color: var(--texto-color);
+  font-family: "Raleway", sans-serif;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+}

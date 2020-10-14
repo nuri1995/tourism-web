@@ -1,0 +1,132 @@
+<div>
+  <h1>REGISTER</h1>
+  <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+    <div class="form-group">
+      <label>Name: </label>
+      <input type="text" [formControl]="name" />
+      <div>
+        <span
+          style="color: red"
+          *ngIf="
+            registerForm.get('name').errors &&
+            (registerForm.get('name').touched || registerForm.get('name').dirty)
+          "
+        >
+          <span *ngIf="registerForm.get('name').errors.required"
+            >Name is required
+          </span>
+
+          <span *ngIf="registerForm.get('name').errors.minlength"
+            >Name must be grater than 3 characters
+          </span>
+          <span *ngIf="registerForm.get('name').errors.maxlength"
+            >Name must be lower than 55 characters
+          </span>
+          <div *ngIf="registerForm.get('name').errors.spaces">
+            It must not contain spaces at the beginning or end of the name.
+          </div>
+        </span>
+      </div>
+
+      <label>Surname: </label>
+      <input type="text" [formControl]="surname" />
+      <div>
+        <span
+          style="color: red"
+          *ngIf="
+            registerForm.get('surname').errors &&
+            (registerForm.get('surname').touched ||
+              registerForm.get('surname').dirty)
+          "
+        >
+          <span *ngIf="registerForm.get('surname').errors.minlength"
+            >Surname must be grater than 3 characters
+          </span>
+          <span *ngIf="registerForm.get('surname').errors.maxlength"
+            >Surname must be lower than 55 characters
+          </span>
+        </span>
+      </div>
+
+      <label>Type: </label>
+      <select class="custom-select" [formControl]="type">
+        <option value="" disabled>- Select -</option>
+        <option>Tourist</option>
+        <option>Company</option>
+      </select>
+      <div>
+        <span
+          style="color: red"
+          *ngIf="
+            registerForm.get('type').errors &&
+            (registerForm.get('type').touched || registerForm.get('type').dirty)
+          "
+        >
+        </span>
+      </div>
+
+      <label>Email: </label>
+      <input type="email" [formControl]="email" />
+      <div>
+        <span
+          style="color: red"
+          *ngIf="
+            registerForm.get('email').errors &&
+            (registerForm.get('email').touched ||
+              registerForm.get('email').dirty)
+          "
+        >
+          <span *ngIf="registerForm.get('email').errors.required"
+            >Email name is required
+          </span>
+          <span *ngIf="registerForm.get('email').errors.pattern"
+            >The email is not valid
+          </span>
+        </span>
+      </div>
+      <label>Password: </label>
+      <input type="password" [formControl]="password" />
+      <div>
+        <span
+          style="color: red"
+          *ngIf="
+            registerForm.get('password').errors &&
+            (registerForm.get('password').touched ||
+              registerForm.get('password').dirty)
+          "
+        >
+          <span *ngIf="registerForm.get('password').errors.required"
+            >User password is required
+          </span>
+          <span *ngIf="registerForm.get('password').errors.minlength"
+            >Password must be grater than 8 characters
+          </span>
+        </span>
+      </div>
+
+      <label>Repeat Password</label>
+      <input type="password" formControlName="password2" class="form-control" />
+      <div>
+        <span
+          style="color: red"
+          *ngIf="
+            registerForm.get('password2').errors &&
+            (registerForm.get('password2').touched ||
+              registerForm.get('password2').dirty)
+          "
+        >
+          <span *ngIf="registerForm.get('password2').errors.required">
+            Confirm Password is required
+          </span>
+          <span *ngIf="registerForm.get('password2').errors.checkPassword">
+            Passwords must match
+          </span>
+        </span>
+      </div>
+      <div style="color: red">
+        {{ message }}
+      </div>
+      <button type="submit" [disabled]="!registerForm.valid">Join now</button>
+    </div>
+  </form>
+</div>

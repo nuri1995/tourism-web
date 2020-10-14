@@ -1,0 +1,164 @@
+<div>
+  <h1>ACTIVITY</h1>
+  <form [formGroup]="activityForm" *ngIf="activityForm" (ngSubmit)="onSave()">
+    <div class="form-group">
+      <label>Name: </label>
+      <input type="text" [formControl]="name" />
+      <div>
+        <span
+          style="color: red"
+          *ngIf="
+            activityForm.get('name').errors &&
+            (activityForm.get('name').touched || activityForm.get('name').dirty)
+          "
+        >
+          <span *ngIf="activityForm.get('name').errors.required"
+            >Name is required
+          </span>
+
+          <span *ngIf="activityForm.get('name').errors.minlength"
+            >Name must be grater than 3 characters
+          </span>
+          <span *ngIf="activityForm.get('name').errors.maxlength"
+            >Name must be lower than 55 characters
+          </span>
+          <div *ngIf="activityForm.get('name').errors.spaces">
+            It must not contain spaces at the beginning or end of the name.
+          </div>
+        </span>
+      </div>
+      <label>Category: </label>
+      <select
+        class="custom-select"
+        [formControl]="category"
+        (change)="changeCategory($event)"
+      >
+        <option value="" disabled>- Select -</option>
+        <option>Cultura y patrimonio</option>
+        <option>Enoturismo</option>
+        <option>Playas</option>
+      </select>
+      <div>
+        <span
+          style="color: red"
+          *ngIf="
+            activityForm.get('category').errors &&
+            (activityForm.get('category').touched ||
+              activityForm.get('category').dirty)
+          "
+        >
+          <span *ngIf="activityForm.get('category').errors.required"
+            >Category is required
+          </span>
+        </span>
+      </div>
+      <label>Subcategory: </label>
+      <select class="custom-select" [formControl]="subcategory">
+        <option value="" disabled>- Select -</option>
+        <option
+          *ngFor="let subcategory of subcategoryDrop"
+          [ngValue]="subcategory"
+        >
+          {{ subcategory }}
+        </option>
+      </select>
+
+      <label>Description: </label>
+      <input type="text" [formControl]="description" />
+
+      <label>Language: </label>
+      <select class="custom-select" [formControl]="language">
+        <option value="" disabled>- Select -</option>
+        <option>Inglés</option>
+        <option>Catalán</option>
+        <option>Español</option>
+        <option>Francés</option>
+        <option>Alemán</option>
+      </select>
+
+      <label>Date: </label>
+      <input type="date" [formControl]="date" />
+
+      <label>Price: </label>
+      <input type="string" [formControl]="price" />
+      <div>
+        <span
+          style="color: red"
+          *ngIf="
+            activityForm.get('price').errors &&
+            (activityForm.get('price').touched ||
+              activityForm.get('price').dirty)
+          "
+        >
+          <span *ngIf="activityForm.get('price').errors.required"
+            >Price is required
+          </span>
+
+          <span *ngIf="activityForm.get('price').errors.pattern"
+            >The price is not valid
+          </span>
+        </span>
+      </div>
+      <label>Minium capacity: </label>
+      <input type="string" [formControl]="minCapacity" />
+      <div>
+        <span
+          style="color: red"
+          *ngIf="
+            activityForm.get('minCapacity').errors &&
+            (activityForm.get('minCapacity').touched ||
+              activityForm.get('minCapacity').dirty)
+          "
+        >
+          <span *ngIf="activityForm.get('minCapacity').errors.required"
+            >Minium capacity is required
+          </span>
+
+          <span *ngIf="activityForm.get('minCapacity').errors.pattern"
+            >The minium capacity is not valid
+          </span>
+        </span>
+      </div>
+      <label>Limit capacity: </label>
+      <input type="string" [formControl]="maxCapacity" />
+      <div>
+        <span
+          style="color: red"
+          *ngIf="
+            activityForm.get('maxCapacity').errors &&
+            (activityForm.get('maxCapacity').touched ||
+              activityForm.get('maxCapacity').dirty)
+          "
+        >
+          <span *ngIf="activityForm.get('maxCapacity').errors.required"
+            >Limit capacity is required
+          </span>
+
+          <span *ngIf="activityForm.get('maxCapacity').errors.pattern"
+            >The limit capacity is not valid
+          </span>
+        </span>
+      </div>
+      <label>State: </label>
+      <select class="custom-select" [formControl]="state">
+        <option value="" disabled>- Select -</option>
+        <option>Cancelled</option>
+        <option>Complete</option>
+        <option>Places available</option>
+      </select>
+      <span
+        style="color: red"
+        *ngIf="
+          activityForm.get('state').errors &&
+          (activityForm.get('state').touched || activityForm.get('state').dirty)
+        "
+      >
+        <span *ngIf="activityForm.get('state').errors.required"
+          >State capacity is required
+        </span>
+      </span>
+
+      <button type="submit" [disabled]="!activityForm.valid">Save</button>
+    </div>
+  </form>
+</div>

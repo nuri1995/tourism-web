@@ -1,0 +1,59 @@
+<div>
+  <h1>LANGUAGE</h1>
+  <form [formGroup]="languageForm" (ngSubmit)="onSave()">
+    <div class="form-group">
+      <label>Level: </label>
+      <select class="custom-select" [formControl]="level">
+        <option value="" disabled>- Select -</option>
+        <option>A1</option>
+        <option>A2</option>
+        <option>B1</option>
+        <option>B2</option>
+        <option>C1</option>
+        <option>C2</option>
+      </select>
+      <div>
+        <span
+          style="color: red"
+          *ngIf="
+            languageForm.get('level').errors &&
+            (languageForm.get('level').touched ||
+              languageForm.get('level').dirty)
+          "
+        >
+          <span *ngIf="languageForm.get('level').errors.required"
+            >Level is required
+          </span>
+        </span>
+      </div>
+      <label>Language: </label>
+      <select class="custom-select" [formControl]="languageName">
+        <option value="" disabled>- Select -</option>
+        <option>Inglés</option>
+        <option>Catalán</option>
+        <option>Español</option>
+        <option>Francés</option>
+        <option>Alemán</option>
+      </select>
+      <div>
+        <span
+          style="color: red"
+          *ngIf="
+            languageForm.get('languageName').errors &&
+            (languageForm.get('languageName').touched ||
+              languageForm.get('languageName').dirty)
+          "
+        >
+          <span *ngIf="languageForm.get('languageName').errors.required"
+            >Language is required
+          </span>
+        </span>
+      </div>
+
+      <label>Finish date: </label>
+      <input type="date" [formControl]="endDate" />
+
+      <button type="submit" [disabled]="!languageForm.valid">Save</button>
+    </div>
+  </form>
+</div>
