@@ -48,6 +48,15 @@ export class ActivitiesService {
         catchError(this.handleError<any>('updateActivity'))
       );
   }
+  deleteActivity(activity: Activity | number): Observable<Activity> {
+    const id = typeof activity === 'number' ? activity : activity.id;
+    const url = `${this.activityUrl}/${id}`;
+
+    return this.http.delete<Activity>(url, this.httpOptions).pipe(
+      tap((_) => console.log(`deleted activity id=${id}`)),
+      catchError(this.handleError<Activity>('deleteHero'))
+    );
+  }
 
   /**
    * Handle Http operation that failed.

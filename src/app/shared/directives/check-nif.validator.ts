@@ -8,6 +8,8 @@ export function CheckNif(controlNationality: string, controlNif: string) {
       '^(([KLMXYZ]|[klmxyz]|[0-9])[0-9]{7}([A-Z]|[a-z]))$'
     );
 
+    console.log(control);
+
     if (control.errors && !control.errors.checkNif) {
       return;
     }
@@ -15,11 +17,9 @@ export function CheckNif(controlNationality: string, controlNif: string) {
     if (controlNation.value === 'ES') {
       if (control.value) {
         const invalid = mask.test(control.value);
-        console.log('test');
         invalid
-          ? control.setErrors({ checkNif: null })
+          ? control.setErrors(null)
           : control.setErrors({ checkNif: true });
-        console.log(invalid);
       } else {
         return;
       }

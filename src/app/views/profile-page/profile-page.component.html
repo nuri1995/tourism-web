@@ -5,52 +5,46 @@
       <div>
         <label>Name:</label>
         <p>
-          {{ currentUser.name }}
+          {{ user.name }}
         </p>
         <label>Surname:</label>
-        <p [ngClass]="{ pEmpty: !currentUser.surname }">
-          {{ currentUser.surname }}
+        <p [ngClass]="{ pEmpty: !user.surname }">
+          {{ user.surname }}
         </p>
         <label>Birth date:</label>
-        <p [ngClass]="{ pEmpty: !currentUser.birthdate }">
-          {{ currentUser.birthdate | date: "dd-MM-yyyy" }}
+        <p [ngClass]="{ pEmpty: !user.birthdate }">
+          {{ user.birthdate | date: "dd-MM-yyyy" }}
         </p>
         <label>Phone:</label>
-        <p [ngClass]="{ pEmpty: !currentUser.phone }">
-          {{ currentUser.phone }}
+        <p [ngClass]="{ pEmpty: !user.phone }">
+          {{ user.phone }}
         </p>
         <label>Nationality:</label>
-        <p [ngClass]="{ pEmpty: !currentUser.nationality }">
-          {{ currentUser.nationality }}
+        <p [ngClass]="{ pEmpty: !user.nationality }">
+          {{ user.nationality }}
         </p>
         <label>NIF:</label>
-        <p [ngClass]="{ pEmpty: !currentUser.nif }">
-          {{ currentUser.nif }}
+        <p [ngClass]="{ pEmpty: !user.nif }">
+          {{ user.nif }}
         </p>
-        <label *ngIf="currentUser.isCompany()">Company name:</label>
-        <p
-          *ngIf="currentUser.isCompany()"
-          [ngClass]="{ pEmpty: !currentUser.nif }"
-        >
-          {{ currentUser.companyName }}
+        <label *ngIf="user.isCompany()">Company name:</label>
+        <p *ngIf="user.isCompany()" [ngClass]="{ pEmpty: !user.nif }">
+          {{ user.companyName }}
         </p>
-        <label *ngIf="currentUser.isCompany()">Company description:</label>
+        <label *ngIf="user.isCompany()">Company description:</label>
         <p
-          *ngIf="currentUser.isCompany()"
-          [ngClass]="{ pEmpty: !currentUser.companyDescription }"
+          *ngIf="user.isCompany()"
+          [ngClass]="{ pEmpty: !user.companyDescription }"
         >
-          {{ currentUser.companyDescription }}
+          {{ user.companyDescription }}
         </p>
-        <label *ngIf="currentUser.isCompany()">CIF:</label>
-        <p
-          *ngIf="currentUser.isCompany()"
-          [ngClass]="{ pEmpty: !currentUser.cif }"
-        >
-          {{ currentUser.cif }}
+        <label *ngIf="user.isCompany()">CIF:</label>
+        <p *ngIf="user.isCompany()" [ngClass]="{ pEmpty: !user.cif }">
+          {{ user.cif }}
         </p>
         <label>About me:</label>
-        <p [ngClass]="{ pEmpty: !currentUser.about }">
-          {{ currentUser.about }}
+        <p [ngClass]="{ pEmpty: !user.about }">
+          {{ user.about }}
         </p>
         <button (click)="updateProfile()">UPDATE PROFILE</button>
       </div>
@@ -175,3 +169,28 @@
     </div>
   </div>
 </section>
+
+<modal id="modal_1" class="hhidden">
+  <div class="dialogImage">
+    <svg
+      width="1em"
+      height="1em"
+      viewBox="0 0 16 16"
+      class="bi bi-exclamation-circle-fill"
+      fill="currentColor"
+      xmlns="http://www.w3.org/2000/svg"
+      style="color: red"
+    >
+      <path
+        fill-rule="evenodd"
+        d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8 4a.905.905 0 0 0-.9.995l.35 3.507a.552.552 0 0 0 1.1 0l.35-3.507A.905.905 0 0 0 8 4zm.002 6a1 1 0 1 0 0 2 1 1 0 0 0 0-2z"
+      />
+    </svg>
+  </div>
+
+  <p class="dialog">Are you sure you want to delete the selected element?</p>
+  <div>
+    <button (click)="yes()">Yes</button
+    ><button (click)="cancel()">Cancel</button>
+  </div>
+</modal>

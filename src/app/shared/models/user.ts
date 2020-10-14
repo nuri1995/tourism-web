@@ -35,19 +35,26 @@ export class User {
       ? true
       : false;
   }
-  public getActivity(id: number): Activity {
-    return this.regActivities.find((activity) => activity.id === id);
-  }
+
   public isFavouriteActivity(id: number): boolean {
     return this.favActivities.find((activity) => activity.id === id)
       ? true
       : false;
+  }
+  public getActivity(id: number): Activity {
+    return this.regActivities.find((activity) => activity.id === id);
   }
   public registerActivity(activity: Activity) {
     this.regActivities.push(activity);
   }
   public favouriteActivity(activity: Activity) {
     this.favActivities.push(activity);
+  }
+  public deleteFavourite(id: number) {
+    const favActivities = this.favActivities.filter(
+      (activity) => activity.id !== id
+    );
+    this.favActivities = favActivities;
   }
   public cancelActivity(id: number) {
     const regActivities = this.regActivities.filter(
@@ -62,6 +69,10 @@ export class User {
     education.id = this.education.length + 1;
     this.education.push(education);
   }
+  public deleteEducation(id: number) {
+    const education = this.education.filter((education) => education.id !== id);
+    this.education = education;
+  }
 
   public addLanguage(language: Language) {
     language.id = this.languages.length + 1;
@@ -69,5 +80,9 @@ export class User {
   }
   public getLanguage(id: number): Language {
     return this.languages.find((language) => language.id === id);
+  }
+  public deleteLanguage(id: number) {
+    const language = this.languages.filter((language) => language.id !== id);
+    this.languages = language;
   }
 }

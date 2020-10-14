@@ -13,8 +13,11 @@ import { PopupComponent } from '../popup/popup.component';
 })
 export class ProfilePageComponent implements OnInit {
   public currentUser: User = new User();
+  public user: User = new User();
   public educations: Education[];
   public languages: Language[];
+  public deleteRow: string;
+  public id: number;
 
   constructor(
     private router: Router,
@@ -22,9 +25,10 @@ export class ProfilePageComponent implements OnInit {
     private userService: UserService
   ) {
     this.userService.currentUser.subscribe((x) => {
-      this.currentUser = Object.assign(this.currentUser, x);
-      this.educations = this.currentUser.education;
-      this.languages = this.currentUser.languages;
+      this.currentUser = x;
+      this.user = Object.assign(this.user, x);
+      this.educations = this.user.education;
+      this.languages = this.user.languages;
       console.log(this.currentUser);
       console.log(this.educations);
       console.log(this.languages);
@@ -39,12 +43,49 @@ export class ProfilePageComponent implements OnInit {
   public newEducation() {
     this.router.navigate(['/education']);
   }
-  public deleteEducation(id: number) {}
+  public deleteEducation(id: number) {
+    let modal_t = document.getElementById('modal_1');
+    modal_t.classList.remove('hhidden');
+    modal_t.classList.add('sshow');
+    this.deleteRow = 'education';
+    this.id = id;
+  }
 
   public newLanguage() {
     this.router.navigate(['/languages']);
   }
-  public deleteLanguage() {
-    this.router.navigate(['/languages/:id']);
+  public deleteLanguage(id: number) {
+    let modal_t = document.getElementById('modal_1');
+    modal_t.classList.remove('hhidden');
+    modal_t.classList.add('sshow');
+    this.deleteRow = 'language';
+    this.id = id;
+  }
+
+  yes() {
+    if (this.deleteRow === 'education') {
+      this.user.deleteEducation(this.id);
+      this.currentUser.education = this.user.education;
+      this.userService.updateUser(this.currentUser).subscribe(() => {
+        console.log(this.currentUser);
+        this.educations = this.currentUser.education;
+      });
+    } else if (this.deleteRow === 'language') {
+      this.user.deleteLanguage(this.id);
+      this.currentUser.languages = this.user.languages;
+      this.userService.updateUser(this.currentUser).subscribe(() => {
+        console.log(this.currentUser);
+        this.languages = this.currentUser.languages;
+      });
+    }
+
+    let modal_t = document.getElementById('modal_1');
+    modal_t.classList.remove('sshow');
+    modal_t.classList.add('hhidden');
+  }
+  cancel() {
+    let modal_t = document.getElementById('modal_1');
+    modal_t.classList.remove('sshow');
+    modal_t.classList.add('hhidden');
   }
 }

@@ -10,6 +10,7 @@ import { ProfileComponent } from './views/profile/profile.component';
 import { RegisterComponent } from './views/register/register.component';
 import { AdminComponent } from './views/admin/admin.component';
 import { ActivitiesComponent } from './views/activities/activities.component';
+import { FavouritesComponent } from './views/favourites/favourites.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent, pathMatch: 'full' },
@@ -25,6 +26,7 @@ const routes: Routes = [
   { path: 'admin', component: AdminComponent },
   { path: 'activities', component: ActivitiesComponent },
   { path: 'activities/:id', component: ActivitiesComponent },
+  { path: 'favourites', component: FavouritesComponent },
 ];
 
 @NgModule({
