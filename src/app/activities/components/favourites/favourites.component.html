@@ -1,0 +1,102 @@
+<section>
+  <div>
+    <h1>FAVOURITES</h1>
+
+    <table id="activitiesTable" *ngIf="favourites">
+      <tr>
+        <th>NAME</th>
+        <th>CATEGORY</th>
+        <th>PRICE</th>
+        <th>LANGUAGE</th>
+        <th>DATE</th>
+        <th>ACTIONS</th>
+      </tr>
+      <tr *ngFor="let activity of favourites">
+        <td>{{ activity.name }}</td>
+        <td>{{ activity.category }}</td>
+        <td>{{ activity.price }}</td>
+        <td>{{ activity.language }}</td>
+        <td>{{ activity.date | date: "dd-MM-yyyy" }}</td>
+        <td>
+          <a
+            (click)="actions(activity.id)"
+            style="color: var(--foscuro-color); cursor: pointer"
+            ><svg
+              width="1.2em"
+              height="1.2em"
+              viewBox="0 0 16 16"
+              class="bi bi-arrow-right-circle-fill"
+              fill="currentColor"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                fill-rule="evenodd"
+                d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-11.5.5a.5.5 0 0 1 0-1h5.793L8.146 5.354a.5.5 0 1 1 .708-.708l3 3a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708-.708L10.293 8.5H4.5z"
+              />
+            </svg>
+          </a>
+        </td>
+      </tr>
+    </table>
+  </div>
+  <div>
+    <h1>ACTIVITIES DETAIL</h1>
+    <div *ngIf="favourite" class="activity-detail">
+      <div>
+        <label>Name:</label>
+        <p>{{ favourite.name }}</p>
+        <label>Description:</label>
+        <p>{{ favourite.description }}</p>
+        <label>Language:</label>
+        <p>{{ favourite.language }}</p>
+        <label>Date:</label>
+        <p>{{ favourite.date | date: "dd-MM-yyyy" }}</p>
+      </div>
+      <div>
+        <label>Category:</label>
+        <p>{{ favourite.category }}</p>
+        <label>Subcategory:</label>
+        <p>{{ favourite.subcategory }}</p>
+        <label>Price:</label>
+        <p>{{ favourite.price }}</p>
+        <label>State:</label>
+        <p>{{ favourite.state }}</p>
+      </div>
+
+      <div>
+        <label>Minium capacity:</label>
+        <p>{{ favourite.minCapacity }}</p>
+        <label>People registered:</label>
+        <p>{{ favourite.peopleRegistered }}</p>
+      </div>
+      <div>
+        <label>Limit capacity:</label>
+        <p>{{ favourite.maxCapacity }}</p>
+        <div class="centerButton">
+          <a (click)="cancelFavourite(favourite.id)" style="cursor: pointer">
+            <figure>
+              <svg
+                width="2em"
+                height="2em"
+                viewBox="0 0 16 16"
+                class="bi bi-heart-half"
+                fill="currentColor"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  fill-rule="evenodd"
+                  d="M8 1.314C3.562-3.248-7.534 4.735 8 15V1.314z"
+                />
+                <path
+                  fill-rule="evenodd"
+                  d="M8 2.748l-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01L8 2.748zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143c.06.055.119.112.176.171a3.12 3.12 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15z"
+                />
+              </svg>
+              <figcaption>REMOVE OF FAVOURITES</figcaption>
+            </figure>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

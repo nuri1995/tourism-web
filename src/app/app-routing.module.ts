@@ -1,16 +1,17 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { MyActivitiesComponent } from './views/my-activities/my-activities.component';
-import { EducationComponent } from './views/education/education.component';
-import { HomeComponent } from './views/home/home.component';
-import { LanguagesComponent } from './views/languages/languages.component';
-import { LoginComponent } from './views/login/login.component';
-import { ProfilePageComponent } from './views/profile-page/profile-page.component';
-import { ProfileComponent } from './views/profile/profile.component';
-import { RegisterComponent } from './views/register/register.component';
-import { AdminComponent } from './views/admin/admin.component';
-import { ActivitiesComponent } from './views/activities/activities.component';
-import { FavouritesComponent } from './views/favourites/favourites.component';
+import { ActivitiesComponent } from './activities/components/activities/activities.component';
+import { AdminComponent } from './activities/components/admin/admin.component';
+import { FavouritesComponent } from './activities/components/favourites/favourites.component';
+import { HomeComponent } from './activities/components/home/home.component';
+import { MyActivitiesComponent } from './activities/components/my-activities/my-activities.component';
+
+import { LoginComponent } from './log/components/login/login.component';
+import { RegisterComponent } from './log/components/register/register.component';
+import { EducationComponent } from './profile/components/education/education.component';
+import { LanguagesComponent } from './profile/components/languages/languages.component';
+import { ProfilePageComponent } from './profile/components/profile-page/profile-page.component';
+import { ProfileComponent } from './profile/components/profile/profile.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent, pathMatch: 'full' },

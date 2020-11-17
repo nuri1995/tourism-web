@@ -5,41 +5,37 @@ import { AppComponent } from './app.component';
 import { HttpClientModule } from '@angular/common/http';
 import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
 import { InMemoryDataService } from './shared/services/in-memory-data.service';
-import { LoginComponent } from './views/login/login.component';
-import { RegisterComponent } from './views/register/register.component';
-import { HomeComponent } from './views/home/home.component';
 import { ReactiveFormsModule } from '@angular/forms';
-import { MyActivitiesComponent } from './views/my-activities/my-activities.component';
-import { ProfileComponent } from './views/profile/profile.component';
-import { ProfilePageComponent } from './views/profile-page/profile-page.component';
-import { EducationComponent } from './views/education/education.component';
-import { LanguagesComponent } from './views/languages/languages.component';
-import { PopupComponent } from './views/popup/popup.component';
-import { AdminComponent } from './views/admin/admin.component';
-import { ActivitiesComponent } from './views/activities/activities.component';
+import { LoginModule } from './log/login.module';
+import { ProfileModule } from './profile/profile.module';
+import { ActivitiesModule } from './activities/activities.module';
+import { EffectsModule } from '@ngrx/effects';
+import { EffectsArray } from './app.effects';
+import { StoreModule } from '@ngrx/store';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { environment } from 'src/environments/environment';
+import { appReducers } from './app.reducer';
+import { SharedModule } from './shared/shared.module';
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    LoginComponent,
-    RegisterComponent,
-    HomeComponent,
-    MyActivitiesComponent,
-    ProfileComponent,
-    ProfilePageComponent,
-    EducationComponent,
-    LanguagesComponent,
-    PopupComponent,
-    AdminComponent,
-    ActivitiesComponent,
-  ],
+  declarations: [AppComponent],
   imports: [
+    LoginModule,
+    ProfileModule,
+    ActivitiesModule,
+    SharedModule,
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
     ReactiveFormsModule,
     HttpClientInMemoryWebApiModule.forRoot(InMemoryDataService, {
       dataEncapsulation: false,
+    }),
+    EffectsModule.forRoot(EffectsArray),
+    StoreModule.forRoot(appReducers),
+    StoreDevtoolsModule.instrument({
+      maxAge: 25,
+      logOnly: environment.production,
     }),
   ],
   providers: [],

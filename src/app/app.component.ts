@@ -1,7 +1,10 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { User } from './shared/models/user';
-import { UserService } from './shared/services/user.service';
+import { User } from './log/models/user';
+import { UserService } from './log/services/user.service';
+import { Store } from '@ngrx/store';
+import { AppState } from 'src/app/app.reducer';
+import { logout, login } from './log/actions/login.actions';
 
 @Component({
   selector: 'app-root',
@@ -13,7 +16,11 @@ export class AppComponent {
   public currentUser: User;
   public user = new User();
 
-  constructor(private router: Router, private userService: UserService) {
+  constructor(
+    private router: Router,
+    private userService: UserService,
+    private loginStore: Store<AppState>
+  ) {
     this.userService.currentUser.subscribe((x) => {
       this.currentUser = x;
       this.user = Object.assign(this.user, x);
@@ -21,7 +28,8 @@ export class AppComponent {
   }
 
   logout() {
-    this.userService.logout();
-    this.router.navigate(['/login']);
+    //this.userService.logout();
+    //this.router.navigate(['/login']);
+    this.loginStore.dispatch(logout());
   }
 }
