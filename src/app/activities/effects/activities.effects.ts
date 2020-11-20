@@ -7,6 +7,9 @@ import {
   getActivities,
   getActivitiesError,
   getActivitiesSuccess,
+  updateActivity,
+  updateActivityFailure,
+  updateActivitySuccess,
 } from '../actions/activities.actions';
 import { Router } from '@angular/router';
 import { ActivitiesService } from '../services/activities.service';
@@ -26,6 +29,18 @@ export class ActivitiesEffects {
         this.activitiesService.getActivities().pipe(
           map((activities) => getActivitiesSuccess({ activities: activities })),
           catchError((err) => of(getActivitiesError({ payload: err })))
+        )
+      )
+    )
+  );
+
+  updateActivity$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(updateActivity),
+      mergeMap(({ activity }) =>
+        this.activitiesService.updateActivities(activity).pipe(
+          map(() => updateActivitySuccess({ activity: activity })),
+          catchError((err) => of(updateActivityFailure({ payload: err })))
         )
       )
     )

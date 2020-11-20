@@ -18,7 +18,7 @@ import { login } from '../../actions/index';
   styleUrls: ['./login.component.css'],
 })
 export class LoginComponent implements OnInit {
-  public user: User = new User();
+  public user: User; // = new User();
   public email: FormControl;
   public password: FormControl;
   public loginForm: FormGroup;
@@ -48,6 +48,7 @@ export class LoginComponent implements OnInit {
   }
 
   public login() {
+    this.user = new User();
     this.user.email = this.email.value;
     this.user.password = this.password.value;
 

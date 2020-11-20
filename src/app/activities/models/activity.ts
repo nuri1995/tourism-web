@@ -15,4 +15,9 @@ export class Activity {
   public isOpen(): boolean {
     return this.state === 'Places available' ? true : false;
   }
+  public addPeople(): number {
+    this.peopleRegistered++;
+    console.log(this.peopleRegistered);
+    return this.peopleRegistered++;
+  }
 }

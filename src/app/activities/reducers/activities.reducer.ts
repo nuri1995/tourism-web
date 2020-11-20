@@ -3,6 +3,9 @@ import {
   getActivities,
   getActivitiesError,
   getActivitiesSuccess,
+  updateActivity,
+  updateActivityFailure,
+  updateActivitySuccess,
 } from '../actions';
 import { Activity } from '../models/activity';
 
@@ -32,6 +35,32 @@ const _activitiesReducer = createReducer(
   })),
 
   on(getActivitiesError, (state, { payload }) => ({
+    ...state,
+    loading: false,
+    loaded: false,
+    error: {
+      url: payload.url,
+      status: payload.status,
+      message: payload.message,
+    },
+  })),
+  on(updateActivity, (state) => ({ ...state, loading: true })),
+  on(updateActivitySuccess, (state, { activity }) => ({
+    ...state,
+    loading: false,
+    loaded: true,
+    activities: [
+      ...state.activities.map((_activity) => {
+        if (_activity.id === activity.id) {
+          return (_activity = activity);
+        } else {
+          return _activity;
+        }
+      }),
+    ],
+  })),
+
+  on(updateActivityFailure, (state, { payload }) => ({
     ...state,
     loading: false,
     loaded: false,
