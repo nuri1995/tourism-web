@@ -10,6 +10,9 @@ import { NoSpaces } from 'src/app/shared/directives/no-spaces.validator';
 import { Education } from 'src/app/profile/models/education';
 import { User } from 'src/app/log/models/user';
 import { UserService } from 'src/app/log/services/user.service';
+import { Store } from '@ngrx/store';
+import { AppState } from 'src/app/app.reducer';
+import { updateUser } from 'src/app/log/actions';
 
 @Component({
   selector: 'app-education',
@@ -34,9 +37,10 @@ export class EducationComponent implements OnInit {
     private formBuilder: FormBuilder,
     private userService: UserService,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private loginStore: Store<AppState>
   ) {
-    this.userService.currentUser.subscribe((x) => {
+    /*this.userService.currentUser.subscribe((x) => {
       this.currentUser = x;
       this.user = Object.assign(this.user, x);
       this.id = +this.route.snapshot.paramMap.get('id');
@@ -44,6 +48,31 @@ export class EducationComponent implements OnInit {
         this.education = this.user.getEducation(this.id);
         console.log(this.education);
 
+        if (this.education.type === 'Universidad') {
+          this.levelDrop = [
+            'Grado',
+            'Diplomado',
+            'Licenciado',
+            'Ingeniero',
+            'Máster',
+            'Doctorado',
+            'Postgrado',
+          ];
+        } else if (this.education.type === 'Ciclo Formativo') {
+          this.levelDrop = ['Grado Superior', 'Grado Medio'];
+        }
+      }
+    });*/
+
+    this.id = +this.route.snapshot.paramMap.get('id');
+    this.loginStore.select('loginApp').subscribe((loginResponse) => {
+      this.currentUser = loginResponse.login;
+      this.user = new User();
+      this.user = Object.assign(this.user, loginResponse.login);
+      this.education = new Education();
+      if (this.id) {
+        this.education = this.user.getEducation(this.id);
+        console.log(this.education);
         if (this.education.type === 'Universidad') {
           this.levelDrop = [
             'Grado',
@@ -122,15 +151,20 @@ export class EducationComponent implements OnInit {
     } else {
       this.user.addEducation(this.education);
     }
-    this.currentUser.education = this.user.education;
+    // this.currentUser.education = this.user.education;
 
-    if (!this.currentUser) {
+    /*  if (!this.currentUser) {
       return;
     }
     console.log(this.currentUser);
     this.userService.updateUser(this.currentUser).subscribe((user) => {
       console.log(user);
       this.router.navigate(['profile-page']);
-    });
+    });*/
+    if (!this.user) {
+      return;
+    }
+    this.loginStore.dispatch(updateUser({ user: this.user }));
+    this.router.navigate(['profile-page']);
   }
 }

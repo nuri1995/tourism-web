@@ -8,8 +8,6 @@ export function CheckNif(controlNationality: string, controlNif: string) {
       '^(([KLMXYZ]|[klmxyz]|[0-9])[0-9]{7}([A-Z]|[a-z]))$'
     );
 
-    console.log(control);
-
     if (control.errors && !control.errors.checkNif) {
       return;
     }

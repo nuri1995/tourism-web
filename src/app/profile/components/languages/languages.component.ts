@@ -10,6 +10,9 @@ import { NoSpaces } from 'src/app/shared/directives/no-spaces.validator';
 import { Language } from 'src/app/profile/models/language';
 import { User } from 'src/app/log/models/user';
 import { UserService } from 'src/app/log/services/user.service';
+import { Store } from '@ngrx/store';
+import { AppState } from 'src/app/app.reducer';
+import { updateUser } from 'src/app/log/actions';
 
 @Component({
   selector: 'app-languages',
@@ -31,12 +34,24 @@ export class LanguagesComponent implements OnInit {
     private formBuilder: FormBuilder,
     private userService: UserService,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private loginStore: Store<AppState>
   ) {
-    this.userService.currentUser.subscribe((x) => {
+    /* this.userService.currentUser.subscribe((x) => {
       this.currentUser = x;
       this.user = Object.assign(this.user, x);
       this.id = +this.route.snapshot.paramMap.get('id');
+      if (this.id) {
+        this.language = this.user.getLanguage(this.id);
+        console.log(this.language);
+      }
+    });*/
+    this.id = +this.route.snapshot.paramMap.get('id');
+    this.loginStore.select('loginApp').subscribe((loginResponse) => {
+      this.currentUser = loginResponse.login;
+      this.user = new User();
+      this.user = Object.assign(this.user, loginResponse.login);
+      this.language = new Language();
       if (this.id) {
         this.language = this.user.getLanguage(this.id);
         console.log(this.language);
@@ -70,7 +85,9 @@ export class LanguagesComponent implements OnInit {
       this.user.languages[this.id - 1] = this.language;
     } else {
       this.user.addLanguage(this.language);
+      console.log('add language', this.user);
     }
+    /*
     this.currentUser.languages = this.user.languages;
 
     if (!this.currentUser) {
@@ -80,6 +97,11 @@ export class LanguagesComponent implements OnInit {
     this.userService.updateUser(this.currentUser).subscribe((user) => {
       console.log(user);
       this.router.navigate(['profile-page']);
-    });
+    });*/
+    if (!this.user) {
+      return;
+    }
+    this.loginStore.dispatch(updateUser({ user: this.user }));
+    // this.router.navigate(['profile-page']);
   }
 }

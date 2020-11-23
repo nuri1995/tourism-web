@@ -10,6 +10,9 @@ import { CheckNif } from 'src/app/shared/directives/check-nif.validator';
 import { NoSpaces } from 'src/app/shared/directives/no-spaces.validator';
 import { User } from 'src/app/log/models/user';
 import { UserService } from 'src/app/log/services/user.service';
+import { Store } from '@ngrx/store';
+import { AppState } from 'src/app/app.reducer';
+import { updateUser } from 'src/app/log/actions';
 
 @Component({
   selector: 'app-profile',
@@ -36,11 +39,19 @@ export class ProfileComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private userService: UserService,
+    private loginStore: Store<AppState>,
     private router: Router
   ) {
+    /*
     this.userService.currentUser.subscribe((x) => {
       this.currentUser = x;
       this.user = Object.assign(this.user, x);
+    });*/
+    this.loginStore.select('loginApp').subscribe((loginResponse) => {
+      this.currentUser = loginResponse.login;
+      this.user = new User();
+      this.user = Object.assign(this.user, loginResponse.login);
+      console.log(this.currentUser);
     });
   }
 
@@ -106,7 +117,7 @@ export class ProfileComponent implements OnInit {
   }
 
   public onSave() {
-    this.currentUser.name = this.name.value;
+    /* this.currentUser.name = this.name.value;
     this.currentUser.surname = this.surname.value;
     this.currentUser.birthdate = this.birthdate.value;
     this.currentUser.phone = this.phone.value;
@@ -116,14 +127,28 @@ export class ProfileComponent implements OnInit {
     this.currentUser.companyName = this.companyName.value;
     this.currentUser.companyDescription = this.companyDescription.value;
     this.currentUser.cif = this.cif.value;
-
     if (!this.currentUser) {
       return;
     }
-
     this.userService.updateUser(this.currentUser).subscribe((user) => {
       console.log(user);
       this.router.navigate(['profile-page']);
-    });
+    });*/
+    this.user.name = this.name.value;
+    this.user.surname = this.surname.value;
+    this.user.birthdate = this.birthdate.value;
+    this.user.phone = this.phone.value;
+    this.user.about = this.about.value;
+    this.user.nationality = this.nationality.value;
+    this.user.nif = this.nif.value;
+    this.user.companyName = this.companyName.value;
+    this.user.companyDescription = this.companyDescription.value;
+    this.user.cif = this.cif.value;
+
+    if (!this.user) {
+      return;
+    }
+    this.loginStore.dispatch(updateUser({ user: this.user }));
+    this.router.navigate(['profile-page']);
   }
 }

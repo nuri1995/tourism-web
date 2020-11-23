@@ -9,6 +9,9 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { NoSpaces } from 'src/app/shared/directives/no-spaces.validator';
 import { Activity } from 'src/app/activities/models/activity';
 import { ActivitiesService } from 'src/app/activities/services/activities.service';
+import { Store } from '@ngrx/store';
+import { AppState } from 'src/app/app.reducer';
+import { createActivity, updateActivity } from '../../actions';
 
 @Component({
   selector: 'app-activities',
@@ -36,47 +39,62 @@ export class ActivitiesComponent implements OnInit {
     private formBuilder: FormBuilder,
     private activitiesService: ActivitiesService,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private activitiesStore: Store<AppState>
   ) {
     this.id = +this.route.snapshot.paramMap.get('id');
+
     if (this.id) {
-      this.activitiesService.getActivity(this.id).subscribe((activity) => {
+      /* this.activitiesService.getActivity(this.id).subscribe((activity) => {
         this.activity = activity;
-        if (this.activity.category === 'Cultura y patrimonio') {
-          this.subcategoryDrop = [
-            'Concierto',
-            'Espectáculo',
-            'Monumento',
-            'Museo',
-            'Excursión',
-            'Festivales',
-            'Visita guiada',
-          ];
-        } else if (this.activity.category === 'Enoturismo') {
-          this.subcategoryDrop = [
-            'Bodega',
-            'Cata de productos',
-            'Excursión',
-            'Museo del vino',
-            'Visita guiada',
-          ];
-        } else if (this.activity.category === 'Playas') {
-          this.subcategoryDrop = [
-            'Actividad náutica',
-            'Cala',
-            'Concierto',
-            'Excursión',
-            'Taller',
-          ];
-        }
+        this.createSubcategory();
         this.createForm();
-      });
+      });*/
+      this.activitiesStore
+        .select('activitiesApp')
+        .subscribe((activitiesResponse) => {
+          this.activity = activitiesResponse.activities.find(
+            (activity) => activity.id === this.id
+          );
+          this.createSubcategory();
+          this.createForm();
+        });
     } else {
       this.createForm();
     }
   }
 
   ngOnInit() {}
+
+  createSubcategory() {
+    if (this.activity.category === 'Cultura y patrimonio') {
+      this.subcategoryDrop = [
+        'Concierto',
+        'Espectáculo',
+        'Monumento',
+        'Museo',
+        'Excursión',
+        'Festivales',
+        'Visita guiada',
+      ];
+    } else if (this.activity.category === 'Enoturismo') {
+      this.subcategoryDrop = [
+        'Bodega',
+        'Cata de productos',
+        'Excursión',
+        'Museo del vino',
+        'Visita guiada',
+      ];
+    } else if (this.activity.category === 'Playas') {
+      this.subcategoryDrop = [
+        'Actividad náutica',
+        'Cala',
+        'Concierto',
+        'Excursión',
+        'Taller',
+      ];
+    }
+  }
 
   createForm() {
     console.log(this.activity);
@@ -161,28 +179,35 @@ export class ActivitiesComponent implements OnInit {
 
   public onSave() {
     console.log('submit');
-    this.activity.name = this.name.value;
-    this.activity.category = this.category.value;
-    this.activity.subcategory = this.subcategory.value;
-    this.activity.description = this.description.value;
-    this.activity.language = this.language.value;
-    this.activity.date = this.date.value;
-    this.activity.price = this.price.value;
-    this.activity.minCapacity = this.minCapacity.value;
-    this.activity.maxCapacity = this.maxCapacity.value;
-    this.activity.state = this.state.value;
+    var _activity: Activity = new Activity();
+
+    _activity.name = this.name.value;
+    _activity.category = this.category.value;
+    _activity.subcategory = this.subcategory.value;
+    _activity.description = this.description.value;
+    _activity.language = this.language.value;
+    _activity.date = this.date.value;
+    _activity.price = this.price.value;
+    _activity.minCapacity = this.minCapacity.value;
+    _activity.maxCapacity = this.maxCapacity.value;
+    _activity.state = this.state.value;
 
     if (this.id) {
-      this.activitiesService
+      /*this.activitiesService
         .updateActivities(this.activity)
-        .subscribe(() => this.router.navigate(['admin']));
+        .subscribe(() => this.router.navigate(['admin']));*/
+      _activity.id = this.id;
+      this.activitiesStore.dispatch(updateActivity({ activity: _activity }));
     } else {
       this.activity.peopleRegistered = 0;
-      this.activitiesService
+      /*this.activitiesService
         .addActivity(this.activity as Activity)
         .subscribe(() => {
           this.router.navigate(['/admin']);
-        });
+        });*/
+
+      this.activitiesStore.dispatch(createActivity({ activity: _activity }));
     }
+    this.router.navigate(['/admin']);
   }
 }

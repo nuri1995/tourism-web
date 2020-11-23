@@ -4,9 +4,16 @@ import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { mergeMap, map, catchError, tap, exhaustMap } from 'rxjs/operators';
 import { of } from 'rxjs';
 import {
+  createActivity,
+  createActivityFailure,
+  createActivitySuccess,
+  deleteActivity,
+  deleteActivityFailure,
+  deleteActivitySuccess,
   getActivities,
   getActivitiesError,
   getActivitiesSuccess,
+  getActivity,
   updateActivity,
   updateActivityFailure,
   updateActivitySuccess,
@@ -34,6 +41,18 @@ export class ActivitiesEffects {
     )
   );
 
+  getActivity$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(getActivity),
+      mergeMap(({ activity }) =>
+        this.activitiesService.getActivity(activity.id).pipe(
+          map(() => updateActivitySuccess({ activity: activity })),
+          catchError((err) => of(updateActivityFailure({ payload: err })))
+        )
+      )
+    )
+  );
+
   updateActivity$ = createEffect(() =>
     this.actions$.pipe(
       ofType(updateActivity),
@@ -41,6 +60,29 @@ export class ActivitiesEffects {
         this.activitiesService.updateActivities(activity).pipe(
           map(() => updateActivitySuccess({ activity: activity })),
           catchError((err) => of(updateActivityFailure({ payload: err })))
+        )
+      )
+    )
+  );
+
+  deleteActivity$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(deleteActivity),
+      mergeMap(({ activity }) =>
+        this.activitiesService.deleteActivity(activity).pipe(
+          map(() => deleteActivitySuccess({ activity: activity })),
+          catchError((err) => of(deleteActivityFailure({ payload: err })))
+        )
+      )
+    )
+  );
+  createActivity$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(createActivity),
+      mergeMap(({ activity }) =>
+        this.activitiesService.addActivity(activity).pipe(
+          map(() => createActivitySuccess({ activity: activity })),
+          catchError((err) => of(createActivityFailure({ payload: err })))
         )
       )
     )

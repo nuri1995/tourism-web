@@ -42,14 +42,15 @@ export class HomeComponent implements OnInit {
       .subscribe((activitiesResponse) => {
         this.activities = activitiesResponse.activities;
       });
-    this.activitiesStore.dispatch(getActivities());
-    //this.getActivities();
+
+    this.getActivities();
   }
 
   public getActivities() {
-    this.activitiesService.getActivities().subscribe((activities) => {
+    /* this.activitiesService.getActivities().subscribe((activities) => {
       this.activities = activities;
-    });
+    });*/
+    this.activitiesStore.dispatch(getActivities());
   }
   public actions(id: number) {
     this.activity = new Activity();
