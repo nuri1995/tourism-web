@@ -33,6 +33,7 @@ export class HomeComponent implements OnInit {
       this.currentUser = Object.assign(this.currentUser, x);
     });*/
     this.loginStore.select('loginApp').subscribe((loginResponse) => {
+      this.currentUser = new User();
       this.currentUser = Object.assign(this.currentUser, loginResponse.login);
     });
   }
@@ -58,39 +59,5 @@ export class HomeComponent implements OnInit {
       this.activity,
       this.activities.find((activity) => activity.id === id)
     );
-  }
-
-  public signUp() {
-    this.currentUser.registerActivity(this.activity);
-    console.log(this.currentUser);
-    this.loginStore.dispatch(updateUser({ user: this.currentUser }));
-    /* this.userService.updateUser(this.currentUser).subscribe((user) => {
-      console.log(user);
-    });*/
-
-    console.log(this.activity);
-
-    //this.activity.peopleRegistered++;
-    this.activity.addPeople();
-    if (this.activity.peopleRegistered === this.activity.maxCapacity) {
-      this.activity.state = 'Complete';
-    }
-    /*
-    this.activitiesService
-      .updateActivities(this.activity)
-      .subscribe((activity) => {
-        console.log(this.activity);
-      });*/
-    this.activitiesStore.dispatch(updateActivity({ activity: this.activity }));
-  }
-
-  public saveFavourites() {
-    console.log(this.currentUser);
-    console.log(this.activity);
-    this.currentUser.favouriteActivity(this.activity);
-    this.loginStore.dispatch(updateUser({ user: this.currentUser }));
-    /*this.userService.updateUser(this.currentUser).subscribe((user) => {
-      console.log(this.currentUser);
-    });*/
   }
 }

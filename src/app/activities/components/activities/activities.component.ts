@@ -199,7 +199,7 @@ export class ActivitiesComponent implements OnInit {
       _activity.id = this.id;
       this.activitiesStore.dispatch(updateActivity({ activity: _activity }));
     } else {
-      this.activity.peopleRegistered = 0;
+      _activity.peopleRegistered = 0;
       /*this.activitiesService
         .addActivity(this.activity as Activity)
         .subscribe(() => {

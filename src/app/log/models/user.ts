@@ -65,18 +65,22 @@ export class User {
     return this.regActivities.find((activity) => activity.id === id);
   }
   public registerActivity(activity: Activity) {
+    this.regActivities = Object.assign([], this.regActivities);
     this.regActivities.push(activity);
   }
   public favouriteActivity(activity: Activity) {
+    this.favActivities = Object.assign([], this.favActivities);
     this.favActivities.push(activity);
   }
   public deleteFavourite(id: number) {
+    this.favActivities = Object.assign([], this.favActivities);
     const favActivities = this.favActivities.filter(
       (activity) => activity.id !== id
     );
     this.favActivities = favActivities;
   }
   public cancelActivity(id: number) {
+    this.regActivities = Object.assign([], this.regActivities);
     const regActivities = this.regActivities.filter(
       (activity) => activity.id !== id
     );
@@ -87,21 +91,25 @@ export class User {
   }
   public addEducation(education: Education) {
     education.id = this.education.length + 1;
+    this.education = Object.assign([], this.education);
     this.education.push(education);
   }
   public deleteEducation(id: number) {
+    this.education = Object.assign([], this.education);
     const education = this.education.filter((education) => education.id !== id);
     this.education = education;
   }
 
   public addLanguage(language: Language) {
     language.id = this.languages.length + 1;
+    this.languages = Object.assign([], this.languages);
     this.languages.push(language);
   }
   public getLanguage(id: number): Language {
     return this.languages.find((language) => language.id === id);
   }
   public deleteLanguage(id: number) {
+    this.languages = Object.assign([], this.languages);
     const language = this.languages.filter((language) => language.id !== id);
     this.languages = language;
   }

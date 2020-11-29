@@ -32,6 +32,7 @@ export class MyActivitiesComponent implements OnInit {
       this.user = Object.assign(this.user, x);
     });*/
     this.loginStore.select('loginApp').subscribe((loginResponse) => {
+      this.currentUser = new User();
       this.currentUser = Object.assign(this.currentUser, loginResponse.login);
       this.getActivities();
     });
@@ -49,34 +50,29 @@ export class MyActivitiesComponent implements OnInit {
     this.activity = this.activities.find((activity) => activity.id === id);
   }
   public saveFavourites() {
-    this.user.favouriteActivity(this.activity);
-    this.currentUser.favActivities = this.user.favActivities;
-    /*
-    this.userService.updateUser(this.currentUser).subscribe((user) => {
-      console.log(this.currentUser);
-    });*/
+    this.currentUser.favouriteActivity(this.activity);
+    // this.currentUser.favActivities = this.user.favActivities;
+
     this.loginStore.dispatch(updateUser({ user: this.currentUser }));
   }
 
   public cancel(id: number) {
-    this.user.cancelActivity(id);
+    this.currentUser.cancelActivity(id);
 
-    this.currentUser.regActivities = this.user.regActivities;
-    /* this.userService.updateUser(this.currentUser).subscribe(() => {
-      console.log(this.currentUser);
-      this.getActivities();
-    });*/
+    //this.currentUser.regActivities = this.user.regActivities;
+
     this.loginStore.dispatch(updateUser({ user: this.currentUser }));
 
-    this.activity.peopleRegistered--;
+    var _activity = new Activity();
+    _activity = Object.assign(_activity, this.activity);
+    _activity.cancelPeople();
+    console.log('activity', _activity);
 
-    /*this.activitiesService
-      .updateActivities(this.activity)
-      .subscribe((activity) => {
-        console.log(this.activity);
-        this.activity = undefined;
-      });*/
-    this.activitiesStore.dispatch(updateActivity({ activity: this.activity }));
+    if (_activity.peopleRegistered < _activity.maxCapacity) {
+      _activity.state = 'Places available';
+    }
+
+    this.activitiesStore.dispatch(updateActivity({ activity: _activity }));
     this.activity = undefined;
   }
 }

@@ -16,8 +16,9 @@ export class Activity {
     return this.state === 'Places available' ? true : false;
   }
   public addPeople(): number {
-    this.peopleRegistered++;
-    console.log(this.peopleRegistered);
     return this.peopleRegistered++;
+  }
+  public cancelPeople(): number {
+    return this.peopleRegistered--;
   }
 }

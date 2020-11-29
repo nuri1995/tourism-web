@@ -39,79 +39,8 @@
       </tr>
     </table>
   </div>
-  <div>
-    <h1>ACTIVITIES DETAIL</h1>
-    <div *ngIf="activity.id" class="activity-detail">
-      <div>
-        <label>Name:</label>
-        <p>{{ activity.name }}</p>
-        <label>Description:</label>
-        <p>{{ activity.description }}</p>
-        <label>Language:</label>
-        <p>{{ activity.language }}</p>
-        <label>Date:</label>
-        <p>{{ activity.date | date: "dd-MM-yyyy" }}</p>
-      </div>
-      <div>
-        <label>Category:</label>
-        <p>{{ activity.category }}</p>
-        <label>Subcategory:</label>
-        <p>{{ activity.subcategory }}</p>
-        <label>Price:</label>
-        <p>{{ activity.price }}</p>
-        <label>State:</label>
-        <p>{{ activity.state }}</p>
-      </div>
-
-      <div>
-        <button
-          class="fav"
-          [disabled]="
-            !currentUser.isTourist() ||
-            currentUser.isFavouriteActivity(activity.id)
-          "
-          (click)="saveFavourites()"
-          style="color: red"
-        >
-          <figure>
-            <svg
-              width="2em"
-              height="2em"
-              viewBox="0 0 16 16"
-              class="bi bi-suit-heart-fill"
-              fill="currentColor"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                d="M4 1c2.21 0 4 1.755 4 3.92C8 2.755 9.79 1 12 1s4 1.755 4 3.92c0 3.263-3.234 4.414-7.608 9.608a.513.513 0 0 1-.784 0C3.234 9.334 0 8.183 0 4.92 0 2.755 1.79 1 4 1z"
-              />
-            </svg>
-            <figcaption>Save favourites</figcaption>
-          </figure>
-        </button>
-      </div>
-      <div>
-        <label>Minium capacity:</label>
-        <p>{{ activity.minCapacity }}</p>
-        <label>People registered:</label>
-        <p>{{ activity.peopleRegistered }}</p>
-      </div>
-      <div>
-        <label>Limit capacity:</label>
-        <p>{{ activity.maxCapacity }}</p>
-        <div class="centerButton">
-          <button
-            [disabled]="
-              !currentUser.isTourist() ||
-              currentUser.isRegisterActivity(activity.id) ||
-              !activity.isOpen()
-            "
-            (click)="signUp()"
-          >
-            SIGN UP
-          </button>
-        </div>
-      </div>
-    </div>
-  </div>
+  <app-activity-details
+    [activity]="activity"
+    [currentUser]="currentUser"
+  ></app-activity-details>
 </section>

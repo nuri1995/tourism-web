@@ -67,7 +67,8 @@
         <button
           class="fav"
           [disabled]="
-            !user.isTourist() || user.isFavouriteActivity(activity.id)
+            !currentUser.isTourist() ||
+            currentUser.isFavouriteActivity(activity.id)
           "
           (click)="saveFavourites()"
           style="color: red"

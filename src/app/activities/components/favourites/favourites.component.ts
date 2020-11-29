@@ -32,8 +32,9 @@ export class FavouritesComponent implements OnInit {
       console.log(this.favourites);
     });*/
     this.loginStore.select('loginApp').subscribe((loginResponse) => {
+      this.currentUser = new User();
       this.currentUser = Object.assign(this.currentUser, loginResponse.login);
-      this.favourites = this.user.favActivities;
+      this.favourites = this.currentUser.favActivities;
     });
   }
   ngOnInit(): void {}
@@ -55,5 +56,6 @@ export class FavouritesComponent implements OnInit {
     this.currentUser.deleteFavourite(id);
     console.log(this.user);
     this.loginStore.dispatch(updateUser({ user: this.currentUser }));
+    this.favourite = undefined;
   }
 }

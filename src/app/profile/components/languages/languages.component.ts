@@ -48,12 +48,11 @@ export class LanguagesComponent implements OnInit {
     });*/
     this.id = +this.route.snapshot.paramMap.get('id');
     this.loginStore.select('loginApp').subscribe((loginResponse) => {
-      this.currentUser = loginResponse.login;
-      this.user = new User();
-      this.user = Object.assign(this.user, loginResponse.login);
+      this.currentUser = new User();
+      this.currentUser = Object.assign(this.currentUser, loginResponse.login);
       this.language = new Language();
       if (this.id) {
-        this.language = this.user.getLanguage(this.id);
+        this.language = this.currentUser.getLanguage(this.id);
         console.log(this.language);
       }
     });
@@ -76,32 +75,22 @@ export class LanguagesComponent implements OnInit {
 
   public onSave() {
     console.log('submit');
-
-    this.language.level = this.level.value;
-    this.language.language = this.languageName.value;
-    this.language.endDate = this.endDate.value;
+    var language = new Language();
+    language.level = this.level.value;
+    language.language = this.languageName.value;
+    language.endDate = this.endDate.value;
+    this.user = new User();
+    this.user = Object.assign(this.user, this.currentUser);
 
     if (this.id) {
-      this.user.languages[this.id - 1] = this.language;
-    } else {
-      this.user.addLanguage(this.language);
-      console.log('add language', this.user);
+      this.user.deleteLanguage(this.id);
     }
-    /*
-    this.currentUser.languages = this.user.languages;
+    this.user.addLanguage(language);
 
-    if (!this.currentUser) {
-      return;
-    }
-    console.log(this.currentUser);
-    this.userService.updateUser(this.currentUser).subscribe((user) => {
-      console.log(user);
-      this.router.navigate(['profile-page']);
-    });*/
     if (!this.user) {
       return;
     }
     this.loginStore.dispatch(updateUser({ user: this.user }));
-    // this.router.navigate(['profile-page']);
+    this.router.navigate(['profile-page']);
   }
 }

@@ -9,6 +9,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { PopupComponent } from '../shared/popup/popup.component';
 import { AppRoutingModule } from '../app-routing.module';
 import { SharedModule } from '../shared/shared.module';
+import { ActivityDetailsComponent } from './components/activity-details/activity-details.component';
 
 @NgModule({
   declarations: [
@@ -17,6 +18,7 @@ import { SharedModule } from '../shared/shared.module';
     FavouritesComponent,
     HomeComponent,
     MyActivitiesComponent,
+    ActivityDetailsComponent,
   ],
   imports: [CommonModule, ReactiveFormsModule, AppRoutingModule, SharedModule],
   exports: [
@@ -25,6 +27,7 @@ import { SharedModule } from '../shared/shared.module';
     FavouritesComponent,
     HomeComponent,
     MyActivitiesComponent,
+    ActivityDetailsComponent,
   ],
 })
 export class ActivitiesModule {}

@@ -66,12 +66,11 @@ export class EducationComponent implements OnInit {
 
     this.id = +this.route.snapshot.paramMap.get('id');
     this.loginStore.select('loginApp').subscribe((loginResponse) => {
-      this.currentUser = loginResponse.login;
-      this.user = new User();
-      this.user = Object.assign(this.user, loginResponse.login);
+      this.currentUser = new User();
+      this.currentUser = Object.assign(this.currentUser, loginResponse.login);
       this.education = new Education();
       if (this.id) {
-        this.education = this.user.getEducation(this.id);
+        this.education = this.currentUser.getEducation(this.id);
         console.log(this.education);
         if (this.education.type === 'Universidad') {
           this.levelDrop = [
@@ -140,27 +139,21 @@ export class EducationComponent implements OnInit {
   }
   public onSave() {
     console.log('submit');
-    this.education.type = this.type.value;
-    this.education.level = this.level.value;
-    this.education.name = this.name.value;
-    this.education.university = this.university.value;
-    this.education.endDate = this.endDate.value;
+    var education = new Education();
+    education.type = this.type.value;
+    education.level = this.level.value;
+    education.name = this.name.value;
+    education.university = this.university.value;
+    education.endDate = this.endDate.value;
+
+    this.user = new User();
+    this.user = Object.assign(this.user, this.currentUser);
 
     if (this.id) {
-      this.user.education[this.id - 1] = this.education;
-    } else {
-      this.user.addEducation(this.education);
+      this.user.deleteEducation(this.id);
     }
-    // this.currentUser.education = this.user.education;
+    this.user.addEducation(education);
 
-    /*  if (!this.currentUser) {
-      return;
-    }
-    console.log(this.currentUser);
-    this.userService.updateUser(this.currentUser).subscribe((user) => {
-      console.log(user);
-      this.router.navigate(['profile-page']);
-    });*/
     if (!this.user) {
       return;
     }
